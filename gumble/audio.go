@@ -5,21 +5,13 @@ import (
 )
 
 const (
-	// AudioSampleRate is the audio sample rate (in hertz) for incoming and
+	// AudioDefaultSampleRate is the audio sample rate (in hertz) for incoming and
 	// outgoing audio.
-	AudioSampleRate = 8000
+	AudioDefaultSampleRate = 48000
 
 	// AudioDefaultInterval is the default interval that audio packets are sent
 	// at.
 	AudioDefaultInterval = 10 * time.Millisecond
-
-	// AudioDefaultFrameSize is the number of audio frames that should be sent in
-	// a 10ms window.
-	AudioDefaultFrameSize = AudioSampleRate / 100
-
-	// AudioMaximumFrameSize is the maximum audio frame size from another user
-	// that will be processed.
-	AudioMaximumFrameSize = AudioSampleRate / 1000 * 60
 
 	// AudioDefaultDataBytes is the default number of bytes that an audio frame
 	// can use.

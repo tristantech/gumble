@@ -36,8 +36,8 @@ func getAudioCodec(id int) AudioCodec {
 // data.
 type AudioCodec interface {
 	ID() int
-	NewEncoder() AudioEncoder
-	NewDecoder() AudioDecoder
+	NewEncoder(int) AudioEncoder
+	NewDecoder(int) AudioDecoder
 }
 
 // AudioEncoder encodes a chunk of PCM audio samples to a certain type.

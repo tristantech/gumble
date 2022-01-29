@@ -87,7 +87,7 @@ func (s *Stream) Play() error {
 	if s.Offset > 0 {
 		args = append([]string{"-ss", strconv.FormatFloat(s.Offset.Seconds(), 'f', -1, 64)}, args...)
 	}
-	args = append(args, "-ac", strconv.Itoa(gumble.AudioChannels), "-ar", strconv.Itoa(gumble.AudioSampleRate), "-f", "s16le", "-")
+	args = append(args, "-ac", strconv.Itoa(gumble.AudioChannels), "-ar", strconv.Itoa(s.client.Config.AudioSampleRate), "-f", "s16le", "-")
 	cmd := exec.Command(s.Command, args...)
 	var err error
 	s.pipe, err = cmd.StdoutPipe()

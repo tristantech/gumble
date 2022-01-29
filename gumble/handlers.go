@@ -108,7 +108,7 @@ func (c *Client) handleUDPTunnel(buffer []byte) error {
 		if codec == nil {
 			return errNoCodec
 		}
-		decoder = codec.NewDecoder()
+		decoder = codec.NewDecoder(c.Config.AudioSampleRate)
 		user.decoder = decoder
 	}
 
@@ -132,7 +132,7 @@ func (c *Client) handleUDPTunnel(buffer []byte) error {
 		return errInvalidProtobuf
 	}
 
-	pcm, err := decoder.Decode(buffer[:audioLength], AudioMaximumFrameSize)
+	pcm, err := decoder.Decode(buffer[:audioLength], c.Config.AudioMaximumFrameSize())
 	if err != nil {
 		return err
 	}
@@ -1072,7 +1072,7 @@ func (c *Client) handleCodecVersion(buffer []byte) error {
 		{
 			c.volatile.Lock()
 
-			c.AudioEncoder = codec.NewEncoder()
+			c.AudioEncoder = codec.NewEncoder(c.Config.AudioSampleRate)
 
 			c.volatile.Unlock()
 		}

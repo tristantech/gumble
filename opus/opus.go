@@ -23,16 +23,16 @@ func (*generator) ID() int {
 	return ID
 }
 
-func (*generator) NewEncoder() gumble.AudioEncoder {
-	e, _ := gopus.NewEncoder(gumble.AudioSampleRate, gumble.AudioChannels, gopus.Voip)
+func (*generator) NewEncoder(sampleRate int) gumble.AudioEncoder {
+	e, _ := gopus.NewEncoder(sampleRate, gumble.AudioChannels, gopus.Voip)
 	e.SetBitrate(gopus.BitrateMaximum)
 	return &Encoder{
 		e,
 	}
 }
 
-func (*generator) NewDecoder() gumble.AudioDecoder {
-	d, _ := gopus.NewDecoder(gumble.AudioSampleRate, gumble.AudioChannels)
+func (*generator) NewDecoder(sampleRate int) gumble.AudioDecoder {
+	d, _ := gopus.NewDecoder(sampleRate, gumble.AudioChannels)
 	return &Decoder{
 		d,
 	}

@@ -22,6 +22,8 @@ type Config struct {
 	AudioInterval time.Duration
 	// AudioDataBytes is the number of bytes that an audio frame can use.
 	AudioDataBytes int
+	// Audio sample rate to use for audio I/O
+	AudioSampleRate int
 
 	// The event listeners used when client events are triggered.
 	Listeners      Listeners
@@ -33,6 +35,7 @@ func NewConfig() *Config {
 	return &Config{
 		AudioInterval:  AudioDefaultInterval,
 		AudioDataBytes: AudioDefaultDataBytes,
+		AudioSampleRate: AudioDefaultSampleRate,
 	}
 }
 
@@ -49,5 +52,13 @@ func (c *Config) AttachAudio(l AudioListener) Detacher {
 // AudioFrameSize returns the appropriate audio frame size, based off of the
 // audio interval.
 func (c *Config) AudioFrameSize() int {
+	// AudioDefaultFrameSize is the number of audio frames that should be sent in
+	// a 10ms window.
+	AudioDefaultFrameSize := c.AudioSampleRate / 100
 	return int(c.AudioInterval/AudioDefaultInterval) * AudioDefaultFrameSize
+}
+
+// Gets the maximum audio frame size from another user that will be processed.
+func (c *Config) AudioMaximumFrameSize() int {
+	return c.AudioSampleRate / 1000 * 60
 }
